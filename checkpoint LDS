@@ -1,0 +1,174 @@
+// First code 
+
+ALGORITHM SUM_DIFF
+
+  x,y,sum,diff:INTEGER
+ set1 : ARRAY_OF INTEGER[];
+ set2 : ARRAY_OF INTEGER[];
+
+BEGIN
+ WRITE(" Get set1 elements ");
+  READ(set1);
+  WRITE(" Get set2 elements ");
+  READ(set2);
+  sum:=0;
+  FOR x FROM 0 TO set1.length-1 DO
+  FOR y FROM 0 TO set2.length-1 DO
+  
+  IF (set1[x]<>set2[y]) THEN
+  diff:=set1[x];
+  ELSE
+  diff:=0;  
+  END_IF
+  sum:=sum+diff;
+  END_FOR  
+  END_FOR
+  FOR x FROM 0 TO set2.length DO
+  FOR y FROM 0 TO set1.length DO
+  IF (set2[x]<>set1[y]) THEN
+    diff:=set2[x];
+  ELSE
+    diff:=0;  
+  END_IF
+  sum:=sum+diff;
+  END_FOR 
+  END_FOR
+  WRITE(sum); 
+END
+
+
+// Second code 
+
+ALGORITHM SUM2_DIFF
+
+x,y,count,sum:INTEGER;
+set1 : ARRAY_OF INTEGER[];
+set2 : ARRAY_OF INTEGER[];
+tab : HASH_TABLE<INTEGER,INTEGER>;
+
+BEGIN
+   READ(set1);
+   READ(set2);
+   sum:=0
+
+   FOR x FROM 0 TO set1.length-1 DO
+   tab.insert(set1[x],1);
+
+   FOR y FROM 0 TO set2.length-1 DO 
+   count:=1;
+
+   IF (tab.lookup(set2[y]=TRUE)) THEN
+       count:=count+1;
+       tab.insert(set1[x],count);
+   END_IF
+
+   IF (count=1) THEN
+      sum:=sum+set1[x];
+   END_IF
+
+   END_FOR
+   END_FOR
+
+   FOR x FROM 0 TO set2.length-1 DO
+        count:=1;
+        IF (tab.lookup(set2[x])=TRUE) THEN
+            count:=count+1;
+            tab.insert(set2[x],count);
+        END_IF
+
+        tab.insert(set2[x],1);
+        IF (count=1) THEN
+            sum:=sum+set2[x];
+        END_IF 
+    END_FOR
+    WRITE(sum);
+END
+
+
+Third Code 
+
+ALGORITHM SUM_OVERLAPPPING
+
+ x,y,sum:INTEGER
+ set1 : ARRAY_OF INTEGER[];
+ set2 : ARRAY_OF INTEGER[];
+
+BEGIN
+
+ WRITE("Get set1 elements ");
+  READ(set1);
+
+  WRITE("Get set2 elements ");
+  READ(set2);
+
+  sum:=0;
+
+  FOR x FROM 0 TO set1.length-1 DO
+  FOR y FROM 0 TO set2.length-1 DO 
+
+  IF (set1[x]=set2[y]) THEN
+  sum:=sum+set1[x]; 
+  END_IF
+
+  END_FOR  
+  END_FOR
+
+  FOR x FROM 0 TO set2.length DO
+  FOR y FROM 0 TO set1.length DO
+
+  IF (set2[x]=set1[y]) THEN
+     sum:=sum+set2[x];  
+
+  END_IF
+
+  END_FOR 
+  END_FOR
+
+  WRITE(sum); 
+END
+
+
+//Forth code 
+
+
+ALGORITHM SUM2_OVERLAPPPING
+
+
+set1 : ARRAY_OF INTEGER[];
+set2 : ARRAY_OF INTEGER[];
+tab : HASH_TABLE<INTEGER,INTEGER>;
+x,y,count,sum:INTEGER;
+BEGIN
+
+   READ(set1);
+   READ(set2);
+   sum:=0
+
+   FOR x FROM 0 TO set1.length-1 DO
+   tab.insert(set1[x],1);
+
+   FOR y FROM 0 TO set2.length-1 DO 
+   count:=1;
+
+   IF (tab.lookup(set2[y]=TRUE)) THEN
+       count:=count+1;
+       tab.insert(set1[x],count);
+       sum:=sum+set1[x];
+   END_IF
+
+   END_FOR
+   END_FOR
+
+   FOR x FROM 0 TO set2.length-1 DO
+        count:=1;
+        IF (tab.lookup(set2[x])=TRUE) THEN
+            count:=count+1;
+            tab.insert(set2[x],count);
+            sum:=sum+set2[x];
+        END_IF
+
+        tab.insert(set2[x],1);
+    END_FOR
+
+    WRITE(sum);
+END
